@@ -1,6 +1,7 @@
 ﻿using libMPSSEWrapper;
 using libMPSSEWrapper.Types;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,9 +17,7 @@ namespace FTDI_Led_Controller
 
         private Boolean running;
 
-        private Queue<byte[]> outputQueue;
-
-        private Boolean looping;
+        private BlockingCollection<byte[]> outputQueue;
 
         private Thread consumeThread;
 
@@ -26,34 +25,22 @@ namespace FTDI_Led_Controller
         {
             Setup();
 
-            outputQueue = new Queue<byte[]>();
+            outputQueue = new BlockingCollection<byte[]>();
 
             running = true;
-
-            looping = false;
-
+            
             consumeThread = new Thread(new ThreadStart(ConsumeQueue));
             consumeThread.Start();
         }
 
         public void OutputBytes(byte[] bytes)
         {
-            outputQueue.Enqueue(bytes);
+            outputQueue.Add(bytes);
         }
 
         public IntPtr GetChannelHandle()
         {
             return channelHandle;
-        }
-
-        public void reset()
-        {
-            outputQueue.Clear();
-        }
-
-        public void setLooping(Boolean loop)
-        {
-            this.looping = loop;
         }
 
         private void Setup()
@@ -90,16 +77,11 @@ namespace FTDI_Led_Controller
             Debug.WriteLine("Consume thread started");
             while (running)
             {
-                if (outputQueue.Count > 0)
+                byte[] output;
+                if (outputQueue.TryTake(out output, 1000))
                 {
-                    byte[] output = outputQueue.Dequeue();
                     WriteOutput(output);
-                    if (looping)
-                    {
-                        outputQueue.Enqueue(output);
-                    }
                 }
-                Thread.Sleep(0);
             }
             Debug.WriteLine("Consume thread finished");
 

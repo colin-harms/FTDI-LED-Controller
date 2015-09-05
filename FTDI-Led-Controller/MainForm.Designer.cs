@@ -73,6 +73,7 @@
             this.Controls.Add(this.RotatingColorBtn);
             this.Name = "MainForm";
             this.Text = "LED Control";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }

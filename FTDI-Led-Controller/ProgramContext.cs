@@ -60,6 +60,7 @@ namespace FTDI_Led_Controller
 
         public void Exit(object sender, EventArgs e)
         {
+            timer.Stop();
             spiOutput.Shutdown();
             LibMpsse.Cleanup();
             Debug.WriteLine("Cleaned Up");

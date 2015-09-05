@@ -63,5 +63,10 @@ namespace FTDI_Led_Controller
                 context.SetDriver(solidColor);
             }
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
