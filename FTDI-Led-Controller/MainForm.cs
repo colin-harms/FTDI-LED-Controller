@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace FTDI_Led_Controller
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         SolidColor solidColor;
         MouseFollower mouseFollower;
@@ -33,12 +33,12 @@ namespace FTDI_Led_Controller
             this.context = context;
         }
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void rotatingColorBtn_Click(object sender, EventArgs e)
         {
             RotatingColor color = new RotatingColor();
             color.Start();
@@ -46,7 +46,7 @@ namespace FTDI_Led_Controller
             context.SetDriver(solidColor);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void mouseFollowBtn_Click(object sender, EventArgs e)
         {
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -55,7 +55,7 @@ namespace FTDI_Led_Controller
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void staticColorBtn_Click(object sender, EventArgs e)
         {
             if (dialog.ShowDialog() == DialogResult.OK)
             {

@@ -14,7 +14,7 @@ namespace FTDI_Led_Controller
         [STAThread]
         static void Main()
         {
-            ProgramContext context = new ProgramContext(new Form1());
+            ProgramContext context = new ProgramContext(new MainForm());
             Application.EnableVisualStyles();
             Application.Run(context);
         }

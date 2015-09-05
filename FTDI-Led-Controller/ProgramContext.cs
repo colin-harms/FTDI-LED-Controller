@@ -18,7 +18,7 @@ namespace FTDI_Led_Controller
 
         LedStrip ledStrip {get; set;}
 
-        Form1 mainForm;
+        MainForm mainForm;
 
         LedDriver driver{get;
         set;}
@@ -30,7 +30,7 @@ namespace FTDI_Led_Controller
             this.driver = driver;
         }
         
-        public ProgramContext(Form1 form)
+        public ProgramContext(MainForm form)
         {
             mainForm = form;
             mainForm.SetContext(this);
